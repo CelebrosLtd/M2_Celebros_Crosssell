@@ -247,7 +247,7 @@ class Api extends \Celebros\Crosssell\Helper\Data
                     'cached' => 'TRUE'
                 ]);
 
-                return explode(",", $response);
+                return explode(",", (string)$response);
             } else {
                 $stime = round(microtime(true) * 1000) - $startTime;
                 $this->sendDebugMessage([
