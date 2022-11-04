@@ -1,15 +1,11 @@
 <?php
 /**
- * Celebros
+ * Celebros (C) 2022. All Rights Reserved.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish correct extension functionality.
  * If you wish to customize it, please contact Celebros.
- *
- ******************************************************************************
- * @category    Celebros
- * @package     Celebros_Crosssell
  */
 namespace Celebros\Crosssell\Plugin\Block\Cart;
 
@@ -20,7 +16,7 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection as Collection;
 use Magento\Catalog\Model\ProductRepository;
 
 /**
- * Crosssell block plugin 
+ * Crosssell block plugin
  */
 class Crosssell
 {
@@ -33,17 +29,17 @@ class Crosssell
      * @var \Magento\Catalog\Block\Product\Context
      */
     protected $context;
-    
+
     /**
      * @var int
      */
     protected $_maxItemCount;
-    
+
     /**
      * @var array
      */
     protected $_addedIds = [];
-    
+
     /**
      * @var array
      */
@@ -53,10 +49,10 @@ class Crosssell
      * @var \Celebros\Crosssell\Helper\Data
      */
     public $helper;
-    
+
     /**
      * @param \Celebros\Crosssell\Helper\Data $helper
-     * @return void     
+     * @return void
      */
     public function __construct(
         Api $helper,
@@ -79,7 +75,7 @@ class Crosssell
     {
         $id = $product->getEntityId();
         $product = $this->_productRepository->getById($id);
-        
+
         $collection = $product->getCrossSellProductCollection();
         $collection = $this->_addProductAttributesAndPrices($collection);
         foreach ($collection as $it) {
@@ -90,7 +86,7 @@ class Crosssell
             }
         }
     }
-    
+
     /**
      * @return int
      */
@@ -98,7 +94,7 @@ class Crosssell
     {
         return $this->_checkoutSession->getLastAddedProductId(true);
     }
-    
+
     /**
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
@@ -113,7 +109,7 @@ class Crosssell
                 $this->_catalogConfig->getProductAttributes()
             )->addUrlRewrite();
     }
-    
+
     /**
      * @param \Magento\Checkout\Block\Cart\Crosssell $subj
      * @param callable $proceed
@@ -137,7 +133,7 @@ class Crosssell
                 if ($lastAddedProduct instanceof \Magento\Catalog\Model\Product) {
                     $this->_collectItems($lastAddedProduct);
                 }
-                
+
                 if (count($this->items) < $this->_maxItemCount) {
                     foreach ($quoteItems as $item) {
                         $product = $item->getProduct();
@@ -147,13 +143,13 @@ class Crosssell
 
                 $subj->setData('items', $this->items);
             }
-            
+
             return $this->items;
         }
-        
+
         return $proceed();
     }
-    
+
     /**
      * Retrieve array of cross-sell products
      *
@@ -177,7 +173,7 @@ class Crosssell
                 if ($lastAddedProduct instanceof \Magento\Catalog\Model\Product) {
                     $this->_collectItems($lastAddedProduct);
                 }
-                
+
                 if (count($this->items) < $this->_maxItemCount) {
                     foreach ($quoteItems as $item) {
                         $product = $item->getProduct();
@@ -186,10 +182,10 @@ class Crosssell
                 }
                 $subj->setData('items', $this->items);
             }
-            
+
             return $this->items;
         }
-        
+
         return $proceed();
     }
 }

@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
 <!--
- * Celebros
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish correct extension functionality.
- * If you wish to customize it, please contact Celebros.
- *
- ******************************************************************************
- * @category    Celebros
- * @package     Celebros_Crosssell
- -->
+  /**
+   * Celebros (C) 2022. All Rights Reserved.
+   *
+   * DISCLAIMER
+   *
+   * Do not edit or add to this file if you wish correct extension functionality.
+   * If you wish to customize it, please contact Celebros.
+   */
+  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\Catalog\Model\Product">
         <plugin name="celebros_api_products" type="Celebros\Crosssell\Plugin\Model\Product"/>
@@ -20,7 +18,7 @@
     </type>
     <type name="Magento\TargetRule\Block\Checkout\Cart\Crosssell">
         <plugin name="celebros_targetrule_crosssell_block" type="Celebros\Crosssell\Plugin\Block\Cart\Crosssell"/>
-    </type>    
+    </type>
     <type name="Magento\TargetRule\Block\Catalog\Product\ProductList\Upsell">
         <plugin name="celebros_targetRule_block_catalog_product_productlist_upsell" type="Celebros\Crosssell\Plugin\Block\AbstractProduct"/>
     </type>

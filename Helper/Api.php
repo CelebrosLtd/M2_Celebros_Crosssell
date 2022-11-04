@@ -1,16 +1,12 @@
 <?php
 
 /**
- * Celebros
+ * Celebros (C) 2022. All Rights Reserved.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish correct extension functionality.
  * If you wish to customize it, please contact Celebros.
- *
- ******************************************************************************
- * @category    Celebros
- * @package     Celebros_Crosssell
  */
 
 namespace Celebros\Crosssell\Helper;
@@ -247,7 +243,7 @@ class Api extends \Celebros\Crosssell\Helper\Data
                     'cached' => 'TRUE'
                 ]);
 
-                return explode(",", $response);
+                return explode(",", (string)$response);
             } else {
                 $stime = round(microtime(true) * 1000) - $startTime;
                 $this->sendDebugMessage([
