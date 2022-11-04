@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
 <!--
- * Celebros
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish correct extension functionality.
- * If you wish to customize it, please contact Celebros.
- *
- ******************************************************************************
- * @category    Celebros
- * @package     Celebros_Crosssell
- -->
+  /**
+   * Celebros (C) 2022. All Rights Reserved.
+   *
+   * DISCLAIMER
+   *
+   * Do not edit or add to this file if you wish correct extension functionality.
+   * If you wish to customize it, please contact Celebros.
+   */
+  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="celebros_crosssell" translate="label" sortOrder="130" showInDefault="1" showInWebsite="0" showInStore="1">
@@ -35,7 +33,7 @@
                 <field id="upsell_enabled" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="1">
                     <label>Enable Product Page Upsell</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>   
+                </field>
                 <field id="upsell_limit" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="1">
                     <label>No. of Upsell Items in Product Page</label>
                     <validate>validate-number validate-greater-than-zero</validate>

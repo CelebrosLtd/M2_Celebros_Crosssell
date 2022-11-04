@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
 <!--
- * Celebros
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish correct extension functionality.
- * If you wish to customize it, please contact Celebros.
- *
- ******************************************************************************
- * @category    Celebros
- * @package     Celebros_Crosssell
- -->
+  /**
+   * Celebros (C) 2022. All Rights Reserved.
+   *
+   * DISCLAIMER
+   *
+   * Do not edit or add to this file if you wish correct extension functionality.
+   * If you wish to customize it, please contact Celebros.
+   */
+  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="Celebros_Crosssell" setup_version="0.9.6">
         <sequence>
