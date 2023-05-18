@@ -21,19 +21,14 @@ use Magento\Catalog\Model\ProductRepository;
 class Crosssell
 {
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var array
      */
-    protected $checkoutSession;
-
-    /**
-     * @var \Magento\Catalog\Block\Product\Context
-     */
-    protected $context;
+    protected $items = [];
 
     /**
      * @var int
      */
-    protected $_maxItemCount;
+    protected $maxItemCount;
 
     /**
      * @var array
@@ -41,14 +36,25 @@ class Crosssell
     protected $_addedIds = [];
 
     /**
-     * @var array
-     */
-    protected $_items = [];
-
-    /**
      * @var \Celebros\Crosssell\Helper\Data
      */
-    public $helper;
+    private $helper;
+
+    /**
+     * @var Session
+     */
+    private $checkoutSession;
+
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    /**
+     * @var \Magento\Catalog\Model\Config
+     */
+    private $catalogConfig;
+
 
     /**
      * @param \Celebros\Crosssell\Helper\Data $helper
@@ -58,29 +64,29 @@ class Crosssell
         Api $helper,
         Session $checkoutSession,
         ProductRepository $productRepository,
-        Context $context
+        \Magento\Catalog\Model\Config $catalogConfig
     ) {
         $this->helper = $helper;
-        $this->_checkoutSession = $checkoutSession;
-        $this->_productRepository = $productRepository;
-        $this->_catalogConfig = $context->getCatalogConfig();
-        $this->_maxItemCount = $this->helper->getCrosssellLimit();
+        $this->checkoutSession = $checkoutSession;
+        $this->productRepository = $productRepository;
+        $this->catalogConfig = $catalogConfig;
+        $this->maxItemCount = $this->helper->getCrosssellLimit();
     }
 
     /**
      * @param \Magento\Catalog\Model\Product $product
      * @return void
      */
-    protected function _collectItems(\Magento\Catalog\Model\Product $product)
+    protected function collectItems(\Magento\Catalog\Model\Product $product)
     {
         $id = $product->getEntityId();
-        $product = $this->_productRepository->getById($id);
+        $product = $this->productRepository->getById($id);
 
         $collection = $product->getCrossSellProductCollection();
-        $collection = $this->_addProductAttributesAndPrices($collection);
+        $collection = $this->addProductAttributesAndPrices($collection);
         foreach ($collection as $it) {
             if (!in_array($it->getEntityId(), $this->_addedIds)
-            && count($this->items) < $this->_maxItemCount) {
+            && count($this->items) < $this->maxItemCount) {
                 $this->items[] = $it;
                 $this->_addedIds[] = $it->getEntityId();
             }
@@ -90,23 +96,23 @@ class Crosssell
     /**
      * @return int
      */
-    protected function _getLastAddedProductId()
+    protected function getLastAddedProductId()
     {
-        return $this->_checkoutSession->getLastAddedProductId(true);
+        return $this->checkoutSession->getLastAddedProductId(true);
     }
 
     /**
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
      */
-    protected function _addProductAttributesAndPrices(Collection $collection)
+    protected function addProductAttributesAndPrices(Collection $collection)
     {
         return $collection
             ->addMinimalPrice()
             ->addFinalPrice()
             ->addTaxPercents()
             ->addAttributeToSelect(
-                $this->_catalogConfig->getProductAttributes()
+                $this->catalogConfig->getProductAttributes()
             )->addUrlRewrite();
     }
 
@@ -120,7 +126,7 @@ class Crosssell
         if ($this->helper->isCrosssellEnabled()) {
             $this->items = (array)$subj->getData('items');
             if (empty($this->items)) {
-                $lastAddedId = (int)$this->_getLastAddedProductId();
+                $lastAddedId = (int)$this->getLastAddedProductId();
                 $lastAddedProduct = null;
                 $quoteItems = $subj->getQuote()->getAllItems();
                 foreach ($quoteItems as $item) {
@@ -131,13 +137,13 @@ class Crosssell
                 }
 
                 if ($lastAddedProduct instanceof \Magento\Catalog\Model\Product) {
-                    $this->_collectItems($lastAddedProduct);
+                    $this->collectItems($lastAddedProduct);
                 }
 
-                if (count($this->items) < $this->_maxItemCount) {
+                if (count($this->items) < $this->maxItemCount) {
                     foreach ($quoteItems as $item) {
                         $product = $item->getProduct();
-                        $this->_collectItems($product);
+                        $this->collectItems($product);
                     }
                 }
 
@@ -160,7 +166,7 @@ class Crosssell
         if ($this->helper->isCrosssellEnabled()) {
             $this->items = (array)$subj->getData('items');
             if (empty($this->items)) {
-                $lastAddedId = (int)$this->_getLastAddedProductId();
+                $lastAddedId = (int)$this->getLastAddedProductId();
                 $lastAddedProduct = null;
                 $quoteItems = $subj->getQuote()->getAllItems();
                 foreach ($quoteItems as $item) {
@@ -171,13 +177,13 @@ class Crosssell
                 }
 
                 if ($lastAddedProduct instanceof \Magento\Catalog\Model\Product) {
-                    $this->_collectItems($lastAddedProduct);
+                    $this->collectItems($lastAddedProduct);
                 }
 
-                if (count($this->items) < $this->_maxItemCount) {
+                if (count($this->items) < $this->maxItemCount) {
                     foreach ($quoteItems as $item) {
                         $product = $item->getProduct();
-                        $this->_collectItems($product);
+                        $this->collectItems($product);
                     }
                 }
                 $subj->setData('items', $this->items);

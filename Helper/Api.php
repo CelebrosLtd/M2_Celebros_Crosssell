@@ -38,11 +38,6 @@ class Api extends \Celebros\Crosssell\Helper\Data
     /**
      * @var array
      */
-    protected $response = [];
-
-    /**
-     * @var array
-     */
     protected $requestParams = [
         'siteKey' => 'crosssell_customer_name',
         'RequestHandle' => 'crosssell_request_handle',
@@ -53,22 +48,22 @@ class Api extends \Celebros\Crosssell\Helper\Data
     /**
      * @var \Magento\Framework\HTTP\Client\Curl
      */
-    public $curl;
+    private $curl;
 
     /**
      * @var \Magento\Framework\Json\Helper\Data
      */
-    public $jsonHelper;
+    private $jsonHelper;
 
     /**
      * @var \Celebros\Crosssell\Helper\Cache
      */
-    public $cache;
+    private $cache;
 
     /**
      * @var \Magento\Framework\Message\ManagerInterface
      */
-    public $messageManager;
+    private $messageManager;
 
     /**
      * @param \Magento\Framework\App\Helper\Context $context
