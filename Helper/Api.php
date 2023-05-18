@@ -13,7 +13,7 @@ namespace Celebros\Crosssell\Helper;
 
 use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
-use Zend\Uri\UriFactory as UriFactory;
+use Laminas\Uri\UriFactory;
 
 /**
  * Crosssell API helper
