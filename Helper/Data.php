@@ -27,7 +27,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @var string
      */
-    public $debugMessageTitle = 'Celebros Crosssell Engine';
+    protected $debugMessageTitle = 'Celebros Crosssell Engine';
 
     /**
      * @param int $store
